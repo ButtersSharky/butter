@@ -9,10 +9,20 @@ public class PlayerController : MonoBehaviour
 
     Vector2 camRotation;
 
-    public bool sprintMode = false; 
+    public Transform weaponSlot; 
 
+    [Header("Player Stats")]
+    public int maxHealth = 5;
+    public int health = 5;
+    public int healthRestore = 1;
+
+    [Header("Weapon Stats")]
+    public bool canFire = true;
+
+    [Header("Movement Settings")]
     public float speed = 10.0f;
     public float sprintMultiplier = 2.5f;
+    public bool sprintMode = false;
     public float jumpHeight = 5.0f;
     public float groundDetectDistance = 1f;
 
@@ -78,13 +88,9 @@ public class PlayerController : MonoBehaviour
         if (sprintMode)
             temp.x = verticalMove * speed * sprintMultiplier;
 
-        temp.x = Input.GetAxisRaw("Vertical") * speed;
-
-          temp.x = Input.GetAxisRaw("Vertical") * speed * sprintMultiplier;
-
           temp.z = Input.GetAxisRaw("Horizontal") * speed;
 
-          if (Input.GetKey(KeyCode.LeftShift))
+          //if (Input.GetKey(KeyCode.LeftShift))
 
           if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
@@ -93,6 +99,45 @@ public class PlayerController : MonoBehaviour
        
               
        
-    } 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((health < maxHealth) && collision.gameObject.tag == "health pickup")
+        {
+            health += healthRestore;
+
+            if (health > maxHealth)
+                health = maxHealth;
+
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "weapon")
+            collision.gameObject.transform.SetParent(weaponSlot);
+    }
+
+
+
+    private void cooldown(bool condition, float timeLimit)
+    {
+        float timer = 0;
+
+        if (timer > timeLimit)
+            timer += Time.deltaTime;
+
+        else
+            condition = true; 
+    }
+
+
+    IEnumerator cooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canFire = true; 
+    }
+
+
+
+
 
 }

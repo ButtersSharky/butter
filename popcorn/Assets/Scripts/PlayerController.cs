@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 camRotation;
 
-    public Transform weaponSlot; 
+    public Transform weaponSlot;
 
     [Header("Player Stats")]
     public int maxHealth = 5;
@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
     public int healthRestore = 1;
 
     [Header("Weapon Stats")]
+    public int weaponID = -1;
+    public int fireMode = 0;
+    public float fireRate = 0;
+    public float currentClip = 0;
+    public float clipsize = 0;
+    public float maxAmmo = 0;
+    public float currentAmmo = 0;
+    public float reloadAmt = 0;
     public bool canFire = true;
 
     [Header("Movement Settings")]
@@ -41,10 +49,10 @@ public class PlayerController : MonoBehaviour
 
         camRotation = Vector2.zero;
         Cursor.visible = false;
-         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
-    } 
-    
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -83,23 +91,31 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!sprintMode)
-             temp.x = verticalMove * speed;
+            temp.x = verticalMove * speed;
 
         if (sprintMode)
             temp.x = verticalMove * speed * sprintMultiplier;
 
-          temp.z = Input.GetAxisRaw("Horizontal") * speed;
+        temp.z = Input.GetAxisRaw("Horizontal") * speed;
 
-          //if (Input.GetKey(KeyCode.LeftShift))
+        //if (Input.GetKey(KeyCode.LeftShift))
 
-          if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
+        if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
-           
-           popcorn.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
-       
-              
-       
+
+        popcorn.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
+
+
+
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (collision.gameObject.tag == "weapon")
+            collision.gameObject.transform.SetParent(weaponSlot);
+    }   
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if ((health < maxHealth) && collision.gameObject.tag == "health pickup")
@@ -130,14 +146,28 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    IEnumerator cooldown(float time)
+    public void reloadClip()
     {
-        yield return new WaitForSeconds(time);
-        canFire = true; 
+        if (currentClip >= clipsize)
+            return;
+
+        else
+        {
+            float reloadCount = clipsize - currentClip;
+
+            if (currentAmmo < reloadCount)
+            {
+                currentClip += currentAmmo;
+                currentAmmo = 0;
+                return;
+            }
+          
     }
 
 
-
-
-
+    IEnumerator cooldown()
+    {
+        yield return new WaitForSeconds(fireRate);
+        canFire = true; 
+    }
 }

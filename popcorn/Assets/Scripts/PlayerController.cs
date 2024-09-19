@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public int healthRestore = 1;
 
     [Header("Weapon Stats")]
+    public GameObject shot;
+    public float shotVel = 0;
     public int weaponID = -1;
     public int fireMode = 0;
     public float fireRate = 0;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float maxAmmo = 0;
     public float currentAmmo = 0;
     public float reloadAmt = 0;
+    public float bulletLifespan = 0;
     public bool canFire = true;
 
     [Header("Movement Settings")]
@@ -65,6 +68,19 @@ public class PlayerController : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
+        if (Input.GetMouseButton(0) && canFire && currentClip > 0 && weaponID >= 0)
+        {
+            GameObject s = Instantiate(shot, weaponSlot.position, weaponSlot.rotation);
+            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotVel);
+            Destroy(s, bulletLifespan);
+
+            canFire = false;
+            currentClip--;
+            StartCoroutine("cooldownFire");
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+            reloadClip();
 
         Vector3 temp = popcorn.velocity;
 
@@ -111,64 +127,94 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "weapon")
-            collision.gameObject.transform.SetParent(weaponSlot);
-    }   
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if ((health < maxHealth) && collision.gameObject.tag == "health pickup")
+        if (other.gameObject.tag == "weapon")
         {
-            health += healthRestore;
 
-            if (health > maxHealth)
-                health = maxHealth;
+            other.gameObject.transform.SetPositionAndRotation(weaponSlot.position, weaponSlot.rotation);
 
-            Destroy(collision.gameObject);
+
+            other.gameObject.transform.SetParent(weaponSlot);
+
+
+            switch (other.gameObject.name)
+            {
+                case "weapon1":
+
+                    weaponID = 0;
+                    shotVel = 10000;
+                    fireMode = 0;
+                    currentClip = 20;
+                    clipsize = 20;
+                    maxAmmo = 400;
+                    maxAmmo = 400;
+                    currentAmmo = 200;
+                    reloadAmt = 20;
+                    bulletLifespan = 1;
+                    break;
+
+                default:
+
+                    break;
+            }
+
         }
 
-        if (collision.gameObject.tag == "weapon")
-            collision.gameObject.transform.SetParent(weaponSlot);
     }
 
-
-
-    private void cooldown(bool condition, float timeLimit)
-    {
-        float timer = 0;
-
-        if (timer > timeLimit)
-            timer += Time.deltaTime;
-
-        else
-            condition = true; 
-    }
-
-
-    public void reloadClip()
-    {
-        if (currentClip >= clipsize)
-            return;
-
-        else
+        private void OnCollisionEnter(Collision collision)
         {
-            float reloadCount = clipsize - currentClip;
-
-            if (currentAmmo < reloadCount)
+            if ((health < maxHealth) && collision.gameObject.tag == "health pickup")
             {
-                currentClip += currentAmmo;
-                currentAmmo = 0;
-                return;
+                health += healthRestore;
+
+                if (health > maxHealth)
+                    health = maxHealth;
+
+                Destroy(collision.gameObject);
             }
-          
-    }
+
+            if ((currentAmmo < maxAmmo) && collision.gameObject.tag == "ammoPickup")
+            {
+              currentAmmo += reloadAmt;
+             
+              if (currentAmmo > maxAmmo)
+                  currentAmmo = maxAmmo;
+
+              Destroy(collision.gameObject);
+
+            }
+
+        }
+
+        public void reloadClip()
+        {
+            if (currentClip >= clipsize)
+                return;
+
+            else
+            {
+                float reloadCount = clipsize - currentClip;
+
+                if (currentAmmo < reloadCount)
+                {
+                    currentClip += currentAmmo;
+                    currentAmmo = 0;
+                    return;
+                }
+
+                else
+                {
+                   currentClip += reloadCount;
+                   currentAmmo -= reloadCount;
+                   return;
+                }
+            }
+        }
 
 
-    IEnumerator cooldown()
-    {
-        yield return new WaitForSeconds(fireRate);
-        canFire = true; 
-    }
-
+        IEnumerator cooldownFire()
+        {
+            yield return new WaitForSeconds(fireRate);
+            canFire = true;
+        }
 }

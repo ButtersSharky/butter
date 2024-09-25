@@ -10,8 +10,10 @@ public class EnemyController : MonoBehaviour
 
     [Header("Enemy Stats")]
     public int health = 3;
-    public int maxHealth; 
-    
+    public int maxHealth;
+    public int damageGiven = 1;
+    public int damageRecieved = 1;
+    public float pushBackForce = 10000;
         
         
         // Start is called before the first frame update
@@ -31,8 +33,17 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "shot")
+        {
+            health -= damageRecieved;
+            Destroy(collision.gameObject);
+          
 
-
-
+        }
+                
+            
+    }
 
 }

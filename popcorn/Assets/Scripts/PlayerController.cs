@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody popcorn;
     Camera playerCam;
 
+    Transform cameraHolder;
+
     Vector2 camRotation;
 
     public Transform weaponSlot;
@@ -48,7 +50,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         popcorn = GetComponent<Rigidbody>();
-        playerCam = transform.GetChild(0).GetComponent<Camera>();
+        playerCam = Camera.main;
+        cameraHolder = transform.GetChild(0);
+        
 
         camRotation = Vector2.zero;
         Cursor.visible = false;
@@ -56,16 +60,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
     // Update is called once per frame
     void Update()
     {
+        playerCam.transform.position = cameraHolder.position;
+
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
 
         camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
-        playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
+        playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
         if (Input.GetMouseButton(0) && canFire && currentClip > 0 && weaponID >= 0)

@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "shot")
+        if(collision.gameObject.tag == "bullet")
         {
             health -= damageRecieved;
             Destroy(collision.gameObject);

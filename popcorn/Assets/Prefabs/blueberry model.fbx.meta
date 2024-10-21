@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: 2fe70ba4a297a784bb00d1252a6add9b
+ModelImporter:
+  serializedVersion: 22103
+  internalIDToNameTable:
+  - first:
+      74: -2527017308826493614
+    second: Sphere|Action
+  - first:
+      74: 6745303064255248823
+    second: Sphere|Action.002
+  - first:
+      74: 6695077435019645749
+    second: Sphere|HeadBob
+  - first:
+      74: 2623217103694749759
+    second: Sphere|Sphere.001Action
+  - first:
+      74: -3177975497958255916
+    second: Sphere|Sphere.002Action
+  - first:
+      74: -8051102449201487124
+    second: Cube|Action
+  - first:
+      74: 7708070724893832537
+    second: Cube|Action.002
+  - first:
+      74: 2747465964546111221
+    second: Cube|HeadBob
+  - first:
+      74: -5224224641880792917
+    second: Cube|Sphere.001Action
+  - first:
+      74: 2966519298807224645
+    second: Cube|Sphere.002Action
+  - first:
+      74: 6706502183178408471
+    second: Sphere.001|Action
+  - first:
+      74: -7825130755781217614
+    second: Sphere.001|Action.002
+  - first:
+      74: -5717414143164151143
+    second: Sphere.001|HeadBob
+  - first:
+      74: -3036527314473485615
+    second: Sphere.001|Sphere.001Action
+  - first:
+      74: -4436524472899874534
+    second: Sphere.001|Sphere.002Action
+  - first:
+      74: -7283652941721210115
+    second: Sphere.002|Action
+  - first:
+      74: -888588389905852818
+    second: Sphere.002|Action.002
+  - first:
+      74: 5832799114908874205
+    second: Sphere.002|HeadBob
+  - first:
+      74: -5899806263776302030
+    second: Sphere.002|Sphere.001Action
+  - first:
+      74: 6260389476474903853
+    second: Sphere.002|Sphere.002Action
+  - first:
+      74: -6434805762499955607
+    second: Cylinder|Action
+  - first:
+      74: 998623046324046051
+    second: Cylinder|Action.002
+  - first:
+      74: -5115342733774148237
+    second: Cylinder|HeadBob
+  - first:
+      74: -1362414421946883442
+    second: Cylinder|Sphere.001Action
+  - first:
+      74: -6680379834809303406
+    second: Cylinder|Sphere.002Action
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     public PlayerController player;
     public NavMeshAgent agent;
+    public Animator myAnim;
 
     [Header("Enemy Stats")]
     public int health = 3;
@@ -21,12 +22,15 @@ public class EnemyController : MonoBehaviour
     {
         player = GameObject.Find("popcorn").GetComponent<PlayerController>();
         agent = GetComponent<NavMeshAgent>();
+        myAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         agent.destination = player.transform.position;
+
+        myAnim.SetBool("isWalking", true);
 
         if (health <= 0)
             Destroy(gameObject);

@@ -13,12 +13,15 @@ public class PlayerController : MonoBehaviour
 
     public Transform weaponSlot;
 
+    public GameManager gm;
+
     [Header("Player Stats")]
     public int maxHealth = 5;
     public int health = 5;
     public int healthRestore = 1;
 
     [Header("Weapon Stats")]
+    public AudioSource weaponSpeaker;
     public GameObject shot;
     public float shotVel = 0;
     public int weaponID = -1;
@@ -40,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public float groundDetectDistance = 1f;
 
     [Header("User Settings")]
-    public bool sprintToggleOption;
+    public bool sprintToggleOption = false;
     public float mouseSensitivity = 2.0f;
     public float Xsensitivity = 2.0f;
     public float Ysensitivity = 2.0f;
@@ -63,34 +66,37 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerCam.transform.position = cameraHolder.position;
-
-        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-
-        camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
-
-        playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
-        transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
-
-        if (Input.GetMouseButton(0) && canFire && currentClip > 0 && weaponID >= 0)
+        if (!gm.isPaused)
         {
-            GameObject s = Instantiate(shot, weaponSlot.position, weaponSlot.rotation);
-            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotVel);
-            Destroy(s, bulletLifespan);
+            playerCam.transform.position = cameraHolder.position;
 
-            canFire = false;
-            currentClip--;
-            StartCoroutine("cooldownFire");
-        }
+            camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+            camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
 
-        if (Input.GetKeyDown(KeyCode.R))
-            reloadClip();
+            camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
-        Vector3 temp = popcorn.velocity;
+            playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
+            transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
-        float verticalMove = Input.GetAxisRaw("Vertical");
-        float horizontalMove = Input.GetAxisRaw("Horizontal");
+            if (Input.GetMouseButton(0) && canFire && currentClip > 0 && weaponID >= 0)
+            {
+                GameObject s = Instantiate(shot, weaponSlot.position, weaponSlot.rotation);
+                s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotVel);
+                Destroy(s, bulletLifespan);
+
+                canFire = false;
+                currentClip--;
+                StartCoroutine("cooldownFire");
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.R))
+                reloadClip();
+
+            Vector3 temp = popcorn.velocity;
+
+        }   float verticalMove = Input.GetAxisRaw("Vertical");
+            float horizontalMove = Input.GetAxisRaw("Horizontal");
 
         if (!sprintToggleOption)
         {

@@ -117,15 +117,15 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (!sprintMode)
-            temp.x = verticalMove * speed;
+            if (!sprintMode)
+                temp.x = verticalMove * speed;
 
-        if (sprintMode)
-            temp.x = verticalMove * speed * sprintMultiplier;
+            if (sprintMode)
+                temp.x = verticalMove * speed * sprintMultiplier;
 
-        temp.z = Input.GetAxisRaw("Horizontal") * speed;
+            temp.z = Input.GetAxisRaw("Horizontal") * speed;
 
-        //if (Input.GetKey(KeyCode.LeftShift))
+         //if (Input.GetKey(KeyCode.LeftShift))
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;

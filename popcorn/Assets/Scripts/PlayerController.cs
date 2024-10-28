@@ -93,10 +93,10 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
                 reloadClip();
 
-            Vector3 temp = popcorn.velocity;
-
         }   float verticalMove = Input.GetAxisRaw("Vertical");
             float horizontalMove = Input.GetAxisRaw("Horizontal");
+
+        Vector3 temp = popcorn.velocity;
 
         if (!sprintToggleOption)
         {
@@ -117,23 +117,22 @@ public class PlayerController : MonoBehaviour
 
         }
 
-            if (!sprintMode)
-                temp.x = verticalMove * speed;
+        {
+            temp.x = verticalMove * speed;
+            temp.z = horizontalMove * speed;
 
             if (sprintMode)
-                temp.x = verticalMove * speed * sprintMultiplier;
+            {
+                temp.x *= sprintMultiplier;
+            }
+            //if (Input.GetKey(KeyCode.LeftShift))
 
-            temp.z = Input.GetAxisRaw("Horizontal") * speed;
-
-         //if (Input.GetKey(KeyCode.LeftShift))
-
-        if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
-            temp.y = jumpHeight;
-
-        popcorn.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
-
-
-
+            if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
+                temp.y = jumpHeight;
+            {
+                popcorn.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
